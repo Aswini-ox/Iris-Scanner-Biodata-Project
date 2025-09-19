@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iris Scanner Login</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at center, #000000, #1a1a1a, #000000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #00ffcc;
+    flex-direction: column;
+  }
+
+  .eye {
+    width: 220px;
+    height: 220px;
+    border: 6px solid #00ffcc;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 25px #00ffcc, inset 0 0 15px #00ffcc;
+  }
+
+  video#camera {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scan-line {
+    width: 100%;
+    height: 4px;
+    background: #00ffcc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: scan 3s linear infinite;
+    box-shadow: 0 0 15px #00ffcc;
+  }
+
+  @keyframes scan {
+    0% { top: 0; }
+    50% { top: 216px; }
+    100% { top: 0; }
+  }
+
+  .status {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ffcc;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: 2px solid #00ffcc;
+    background: black;
+    color: #00ffcc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #00ffcc;
+    color: black;
+  }
+
+  .bio-data {
+    display: none;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #00ffcc;
+    text-align: center;
+    max-width: 800px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .bio-data h2 {
+    color: #00ffcc;
+    border-bottom: 3px solid #00ffcc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 28px;
+  }
+
+  .profiles {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+  }
+
+  .profile-card {
+    background: rgba(0,0,0,0.75);
+    border: 2px solid #00ffcc;
+    border-radius: 15px;
+    padding: 15px;
+    width: 160px;
+    text-align: center;
+    box-shadow: 0 0 25px #00ffcc;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .profile-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px #00ffcc;
+  }
+
+  .profile-card img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #00ffcc;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .profile-card h3 {
+    color: #00ffcc;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .profile-card p {
+    color: #e0e0e0;
+    font-size: 13px;
+    margin: 2px 0;
+  }
+
+  .college-journey {
+    margin-top: 25px;
+    text-align: left;
+    padding: 15px;
+    border: 2px solid #00ffcc;
+    border-radius: 12px;
+    box-shadow: 0 0 25px #00ffcc;
+    background: rgba(0,0,0,0.8);
+  }
+
+  .college-journey h3 {
+    color: #00ffcc;
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+
+  .college-journey p {
+    color: #e0e0e0;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .college-journey blockquote {
+    color: #00ffcc;
+    font-size: 16px;
+    font-style: italic;
+    margin: 10px 0;
+    border-left: 3px solid #00ffcc;
+    padding-left: 10px;
+  }
+
+  .college-journey video {
+    width: 100%;
+    max-height: 250px;
+    border-radius: 12px;
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 15px #00ffcc;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="eye">
+    <video id="camera" autoplay playsinline></video>
+    <div class="scan-line"></div>
+  </div>
+
+  <div class="status" id="statusText">Align your eye with the scanner...</div>
+  <button onclick="startScan()">Start Scan</button>
+
+  <div class="bio-data" id="bioData">
+    <h2>My Biodata</h2>
+    <div class="profiles">
+      <div class="profile-card">
+        <img src="your_photo.jpg" alt="Aswini">
+        <h3>Aswini</h3>
+        <p>Age:19</p>
+        <p>Engineering Student</p>
+      </div>
+      <div class="profile-card">
+        <img src="father_photo.png" alt="D. Raja Stephen">
+        <h3>D. Raja Stephen</h3>
+        <p>Father</p>
+         <p> social worker</p>
+      </div>
+      <div class="profile-card">
+        <img src="mothers_photo.png" alt="S. Ida Mary">
+        <h3>S. Ida Mary</h3>
+        <p>Mother</p>
+      </div>
+    </div>
+
+    <p><strong>School:</strong>St.francis.hr.sec.school</p>
+    <p><strong>College:</strong>V.S.B COLLEGE OF ENGINEERING TECHNICAL CAMPUS,COIMBATORE</p>
+    <p><strong>Degree:</strong>B.E.COMPUTER SCIENCE AND ENGINEERING</p>
+    <p><strong>Skills:</strong> Java, Python, Web Development, AI</p>
+    <p><strong>Hobbies:</strong> Coding, Music, Exploring Tech</p>
+
+    <div class="college-journey">
+      <h3>My Engineering Journey</h3>
+      <p>Hello! I am Aswini, an aspiring engineer passionate about technology and innovation. My journey in engineering has been a path of learning, exploration, and creativity. Every challenge I faced helped me grow and discover my strengths.</p>
+      <p>I believe in the power of persistence, curiosity, and hard work. Through my projects in coding, AI, and web development, I am shaping my future one line of code at a time.</p>
+      <blockquote>"Engineering is not only about solving problems but also about creating solutions that impact the world."</blockquote>
+      <blockquote>"The future belongs to those who prepare for it today." – Malcolm X</blockquote>
+     
+       
+    </div>
+  </div>
+
+<script>
+  const camera = document.getElementById("camera");
+  const statusText = document.getElementById("statusText");
+  const bioData = document.getElementById("bioData");
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => { camera.srcObject = stream; })
+    .catch(err => { alert("Camera access denied!"); });
+
+  function startScan() {
+    statusText.innerText = "Scanning Eye...";
+    setTimeout(() => {
+      const isMatch = true; // simulate iris scan
+      if (isMatch) {
+        statusText.innerText = "Access Granted ✅";
+        bioData.style.display = "block";
+      } else {
+        statusText.innerText = "Access Denied ❌";
+        bioData.style.display = "none";
+        alert("Unauthorized Eye! Access Denied.");
+      }
+    }, 4000);
+  }
+</script>
+</body>
+</html>
